@@ -1,0 +1,25 @@
+<?= $this->Form->create() ?>
+    <div class="form-group">
+        <label for="singin-email-2">Correo *</label>
+        <?= $this->Form->control('email', ['label'=>false, 'class' => 'form-control', 'id' => 'singin-email-2', 'required' => true]) ?>
+    </div><!-- End .form-group -->
+
+    <div class="form-group">
+        <label for="singin-password-2">Contraseña *</label>
+        <?= $this->Form->control('password', ['label'=>false, 'class' => 'form-control', 'id' => 'singin-password-2', 'required' => true]) ?>
+    </div><!-- End .form-group -->
+
+    <div class="form-footer">
+        <button type="submit" class="btn btn-outline-primary-2">
+            <span>ENTRAR</span>
+            <i class="icon-long-arrow-right"></i>
+        </button>
+
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="signin-remember-2">
+            <label class="custom-control-label" for="signin-remember-2">Remember Me</label>
+        </div><!-- End .custom-checkbox -->
+
+        <a href="#" class="forgot-link">Forgot Your Password?</a>
+    </div><!-- End .form-footer -->
+<?= $this->Form->end() ?>
