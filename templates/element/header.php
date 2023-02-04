@@ -33,7 +33,11 @@
                             <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist <span>(3)</span></a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
-                            <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                            <li>
+                                <a href="<?= $this->Url->build(['controller'=>'users', 'action'=>'login']) ?>">
+                                    <i class="icon-user"></i>Login
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul><!-- End .top-menu -->
@@ -49,7 +53,7 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="index.html" class="logo">
+                <a href="<?= $this->Url->build(['controller'=>'web', 'action'=>'index']) ?>" class="logo">
 
                     <?= $this->Html->image('../assets/images/demos/demo-7/logo.png', [
                         'alt'=>'Molla Logo',

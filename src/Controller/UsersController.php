@@ -29,7 +29,7 @@ class UsersController extends AppController
         if ($result && $result->isValid()) {
             // redirect to /articles after login success
             $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Users',
+                'controller' => 'web',
                 'action' => 'index',
             ]);
 
@@ -90,6 +90,8 @@ class UsersController extends AppController
      */
     public function add()
     {
+        $this->viewBuilder()->setLayout('login');
+
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
