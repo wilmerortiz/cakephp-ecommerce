@@ -19,19 +19,21 @@
         </div><!-- End .row -->
 
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="banner banner-overlay text-white">
-                    <a href="#">
-                        <?= $this->Html->image('../assets/images/demos/demo-7/banners/banner-3.jpg', ['alt' =>'Banner']) ?>
-                    </a>
+            <?php foreach($categories as $key => $category): ?>
+                <div class="col-md-6 col-lg-4">
+                    <div class="banner banner-overlay text-white">
+                        <a href="#">
+                            <?= $this->Html->image($category['image'], ['alt' =>'Banner']) ?>
+                        </a>
 
-                    <div class="banner-content banner-content-right">
-                        <h4 class="banner-subtitle"><a href="#">Flip Flop</a></h4><!-- End .banner-subtitle -->
-                        <h3 class="banner-title"><a href="#">Summer<br>sale -70% off</a></h3><!-- End .banner-title -->
-                        <a href="#" class="btn underline btn-outline-white-3 banner-link">Shop Now</a>
-                    </div><!-- End .banner-content -->
-                </div><!-- End .banner -->
-            </div><!-- End .col-lg-4 -->
+                        <div class="banner-content banner-content-right">
+                            <h4 class="banner-subtitle"><a href="#"><?= $category['name'] ?></a></h4><!-- End .banner-subtitle -->
+                            <h3 class="banner-title"><a href="#"><?= $category['descripcion'] ?></a></h3><!-- End .banner-title -->
+                            <a href="#" class="btn underline btn-outline-white-3 banner-link">Shop Now</a>
+                        </div><!-- End .banner-content -->
+                    </div><!-- End .banner -->
+                </div><!-- End .col-lg-4 -->
+            <?php endforeach; ?>
 
             <div class="col-md-6 col-lg-4">
                 <div class="banner banner-overlay color-grey">

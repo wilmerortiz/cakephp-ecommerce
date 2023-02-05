@@ -16,6 +16,7 @@ class WebController extends AppController{
     public function index(){
         $connection = ConnectionManager::get('default');
         $typesTable = $this->getTableLocator()->get('Types');
+        $categoriesTable = $this->getTableLocator()->get('Categories');
 
         $types = $typesTable->find('all')
             ->where(['status'=>1])
@@ -30,6 +31,11 @@ class WebController extends AppController{
             ->execute()
             ->fetchAll('assoc');
 
-        $this->set(compact('types', 'varios'));
+        $categories = $categoriesTable->find('all')
+            ->where(['status'=>1])
+            ->order(['id'=>'asc'])
+            ->limit(3);
+
+        $this->set(compact('types', 'varios', 'categories'));
     }
 }
