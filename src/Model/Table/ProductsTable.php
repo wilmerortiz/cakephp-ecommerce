@@ -6,18 +6,19 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 
-class TypesTable extends Table {
+class ProductsTable extends Table {
 
     public function initialize(array $config): void
     {
         parent::initialize($config);
 
-        $this->setTable('types');
+        $this->setTable('products');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Products',[
-            'foreignKey'=>'type_id'
+        $this->belongsTo('Types', [
+            'foreignKey' => 'type_id',
+            'joinType' => 'INNER'
         ]);
 
     }

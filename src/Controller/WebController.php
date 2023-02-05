@@ -23,6 +23,8 @@ class WebController extends AppController{
             ->order(['id'=>'asc'])
             ->limit(2);
 
+        //debug($types); exit();
+
         $varios = $connection->newQuery()
             ->select('title, description, icono')
             ->from('varios')
@@ -36,6 +38,11 @@ class WebController extends AppController{
             ->order(['id'=>'asc'])
             ->limit(3);
 
-        $this->set(compact('types', 'varios', 'categories'));
+        $products = $typesTable->find('all')
+            ->contain('Products')
+            ->where(['status'=>1])
+            ->order(['id'=>'asc']);
+
+        $this->set(compact('types', 'varios', 'categories', 'products'));
     }
 }
