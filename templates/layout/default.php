@@ -19,7 +19,8 @@ $cakeDescription = 'ecommerce';
         '../assets/css/bootstrap.min.css',
         '../assets/css/plugins/owl-carousel/owl.carousel.css',
         '../assets/css/plugins/magnific-popup/magnific-popup.css',
-        '../assets/css/plugins/jquery.countdown.css'
+        '../assets/css/plugins/jquery.countdown.css',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css'
     ]) ?>
     <!-- Main CSS File -->
     <?= $this->Html->css([
@@ -269,11 +270,13 @@ $cakeDescription = 'ecommerce';
     '../assets/js/jquery.plugin.min.js',
     '../assets/js/jquery.magnific-popup.min.js',
     '../assets/js/jquery.countdown.min.js',
+    'https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js'
 ]) ?>
 <!-- Main JS File -->
 <?= $this->Html->script([
     '../assets/js/main.js',
-    '../assets/js/demos/demo-7.js'
+    '../assets/js/demos/demo-7.js',
+    'app/app.js'
 ]) ?>
 </body>
 </html>

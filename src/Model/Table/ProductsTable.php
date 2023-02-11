@@ -16,8 +16,20 @@ class ProductsTable extends Table {
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Timestamp');
+
         $this->belongsTo('Types', [
             'foreignKey' => 'type_id',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->belongsTo('Subcategories', [
+            'foreignKey' => 'subcategory_id',
             'joinType' => 'INNER'
         ]);
 
