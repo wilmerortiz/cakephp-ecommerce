@@ -138,7 +138,7 @@
                                     <div class="product-action">
                                         <a href="javascript:"
                                            class="btn-product btn-cart"
-                                           onclick="addToCart(<?= $product['id'] ?>, '<?= $product['name'] ?>', <?= $product['price'] ?>, '<?= $product['image'] ?>')"
+                                           onclick="addItem(<?= $product['id'] ?>, '<?= $product['name'] ?>', <?= $product['price'] ?>, '<?= $product['image'] ?>')"
                                         >
                                             <span>add to cart</span>
                                         </a>

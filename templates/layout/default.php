@@ -29,6 +29,10 @@ $cakeDescription = 'ecommerce';
         '../assets/css/demos/demo-7.css'
     ]) ?>
 
+    <?= $this->Html->script([
+        '../assets/js/jquery.min.js'
+    ]) ?>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -260,7 +264,7 @@ $cakeDescription = 'ecommerce';
 
 <!-- Plugins JS File -->
 <?= $this->Html->script([
-    '../assets/js/jquery.min.js',
+
     '../assets/js/bootstrap.bundle.min.js',
     '../assets/js/jquery.hoverIntent.min.js',
     '../assets/js/jquery.waypoints.min.js',
