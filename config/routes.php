@@ -51,6 +51,7 @@ return static function (RouteBuilder $routes) {
          * to use (in this case, templates/Pages/home.php)...
          */
         $builder->connect('/', ['controller' => 'Web', 'action' => 'index']);
+        $builder->connect('/checkout', ['controller' => 'Checkout', 'action' => 'add']);
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.

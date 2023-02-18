@@ -1,3 +1,11 @@
+<style>
+    .btn{
+        min-width: 40px !important;
+    }
+    .table.table-cart .quantity-col{
+        width: 155px;
+    }
+</style>
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         <div class="container">
@@ -35,30 +43,17 @@
                             </tbody>
                         </table><!-- End .table table-wishlist -->
 
-                        <div class="cart-bottom">
-                            <div class="cart-discount">
-                                <form action="#">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" required placeholder="coupon code">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
-                                        </div><!-- .End .input-group-append -->
-                                    </div><!-- End .input-group -->
-                                </form>
-                            </div><!-- End .cart-discount -->
 
-                            <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
-                        </div><!-- End .cart-bottom -->
                     </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3">
-                        <div class="summary summary-cart">
+                        <div class="summary summary-cart mb-1">
                             <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
 
                             <table class="table table-summary">
                                 <tbody>
                                 <tr class="summary-subtotal">
                                     <td>Subtotal:</td>
-                                    <td>$160.00</td>
+                                    <td id="summary-subtotal">$0.00</td>
                                 </tr><!-- End .summary-subtotal -->
                                 <tr class="summary-shipping">
                                     <td>Shipping:</td>
@@ -68,7 +63,7 @@
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
+                                            <input type="radio" id="free-shipping" name="shipping" class="custom-control-input" value="0" checked onchange="calcularTotales()"/>
                                             <label class="custom-control-label" for="free-shipping">Free Shipping</label>
                                         </div><!-- End .custom-control -->
                                     </td>
@@ -78,7 +73,7 @@
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
+                                            <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input" value="10" onchange="calcularTotales()"/>
                                             <label class="custom-control-label" for="standart-shipping">Standart:</label>
                                         </div><!-- End .custom-control -->
                                     </td>
@@ -88,26 +83,26 @@
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
+                                            <input type="radio" id="express-shipping" name="shipping" class="custom-control-input" value="20" onchange="calcularTotales()"/>
                                             <label class="custom-control-label" for="express-shipping">Express:</label>
                                         </div><!-- End .custom-control -->
                                     </td>
                                     <td>$20.00</td>
                                 </tr><!-- End .summary-shipping-row -->
 
-                                <tr class="summary-shipping-estimate">
+                                <!--<tr class="summary-shipping-estimate">
                                     <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
                                     <td>&nbsp;</td>
-                                </tr><!-- End .summary-shipping-estimate -->
+                                </tr> End .summary-shipping-estimate -->
 
-                                <tr class="summary-total">
+                                <tr class="summary-total border-top">
                                     <td>Total:</td>
-                                    <td>$160.00</td>
+                                    <td id="summary-total">$0.00</td>
                                 </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
 
-                            <a href="<?= $this->Url->build(['controller' => 'checkout', 'action'=>'index']) ?>" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                            <a href="<?= $this->Url->build(['controller' => 'checkout', 'action'=>'add']) ?>" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
                         </div><!-- End .summary -->
 
                         <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>

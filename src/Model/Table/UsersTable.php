@@ -55,20 +55,25 @@ class UsersTable extends Table
             'joinType' => 'INNER',
         ]);
 
+        $this->belongsTo('Countries', [
+            'foreignKey' => 'country_id',
+            'joinType' => 'INNER',
+        ]);
+
         $this->belongsToMany('Roles', [
             'foreignKey' => 'user_id',
             'joinTable' => 'user_roles',
             'targetForeignKey' => 'role_id'
         ]);
 
-        /*
+
         $this->hasMany('BillingAddress', [
             'foreignKey' => 'user_id',
         ]);
         $this->hasMany('ShippingAddress', [
             'foreignKey' => 'user_id',
         ]);
-        $this->hasMany('UserRoles', [
+        /*$this->hasMany('UserRoles', [
             'foreignKey' => 'user_id',
         ]);*/
     }

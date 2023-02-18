@@ -33,6 +33,11 @@ $cakeDescription = 'ecommerce';
         '../assets/js/jquery.min.js'
     ]) ?>
 
+    <script>
+        var baseUrl = "<?= \Cake\Routing\Router::url('/') ?>";
+        var controller = "<?= $this->request->getParam('controller'); ?>";
+    </script>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -227,7 +232,7 @@ $cakeDescription = 'ecommerce';
     </div><!-- End .mobile-menu-wrapper -->
 </div><!-- End .mobile-menu-container -->
 
-<div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+<div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-formM">
     <div class="row justify-content-center">
         <div class="col-10">
             <div class="row no-gutters bg-white newsletter-popup-content">
@@ -261,6 +266,8 @@ $cakeDescription = 'ecommerce';
         </div>
     </div>
 </div>
+
+<div id="divFormulario"></div>
 
 <!-- Plugins JS File -->
 <?= $this->Html->script([

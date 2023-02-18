@@ -52,4 +52,17 @@ class AppController extends Controller
 
         $this->loadComponent('Authentication.Authentication');
     }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['login', 'logout']);
+
+        $result = $this->Authentication->getResult();
+        $current_user = $result->getData();
+
+        $this->set(compact('current_user'));
+    }
 }

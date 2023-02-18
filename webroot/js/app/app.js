@@ -6,7 +6,7 @@ function addToCart(){
 
     if(cartItems !== null){
         cartItems.map((item) => {
-            cartTotalPrice += parseFloat( item.price );
+            cartTotalPrice += parseFloat( item.price ) * parseInt(item.cantidad);
             let product = `<div class="product" data-id="product-${item.id}">
                                 <div class="product-cart-details">
                                     <h4 class="product-title">
@@ -14,7 +14,7 @@ function addToCart(){
                                     </h4>
 
                                     <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
+                                                <span class="cart-product-qty">${item.cantidad}</span>
                                                 x $${item.price}
                                             </span>
                                 </div><!-- End .product-cart-details -->
@@ -54,23 +54,40 @@ const getCartItems = () => {
     return JSON.parse(data);
 }
 
-const addItem = (id, name, price, image) => {
+const addItem = (id, name, price, image, cantidad=1) => {
     let cartItems = getCartItems();
-    const item = {
+    let item = {
         id, // id: id
         name, // name: name
         price, // price: price
-        image // image: image
+        image, // image: image
+        cantidad // cantidad: cantidad
     }
 
     if(cartItems !== null && cartItems.length > 0){
-        cartItems = [
-            ...cartItems,
-            item
-        ]
-        console.log('1');
+
+        const index = cartItems.findIndex(item => item.id === id);
+
+        if(index > -1) {
+
+            item = {
+                id: id,
+                name: name,
+                price: price,
+                image: image,
+                cantidad: cartItems[index].cantidad + 1
+            }
+
+            cartItems[index] = item;
+
+        }else{
+            cartItems = [
+                ...cartItems,
+                item
+            ]
+        }
+
     } else {
-        console.log('1');
         cartItems = [
             item
         ];
