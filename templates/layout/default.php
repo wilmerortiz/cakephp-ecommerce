@@ -16,17 +16,20 @@ $cakeDescription = 'ecommerce';
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
     <!-- Plugins CSS File -->
     <?= $this->Html->css([
-        '../assets/css/bootstrap.min.css',
+        //'../assets/css/bootstrap.min.css',
+        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css',
         '../assets/css/plugins/owl-carousel/owl.carousel.css',
         '../assets/css/plugins/magnific-popup/magnific-popup.css',
         '../assets/css/plugins/jquery.countdown.css',
+        '../assets/css/plugins/nouislider/nouislider.css',
         'https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css'
     ]) ?>
     <!-- Main CSS File -->
     <?= $this->Html->css([
         '../assets/css/style.css',
         '../assets/css/skins/skin-demo-7.css',
-        '../assets/css/demos/demo-7.css'
+        '../assets/css/demos/demo-7.css',
+        'estilos.css'
     ]) ?>
 
     <?= $this->Html->script([
@@ -269,10 +272,25 @@ $cakeDescription = 'ecommerce';
 
 <div id="divFormulario"></div>
 
+<!-- Modal PDF -->
+<div class="modal fade" id="modalImprimir" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" style="">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe id="iframeImprimir" width="100%" height="600px"></iframe>
+            </div>
+            <div class="modal-footer">
+                <a href="<?= $this->Url->build(['controller'=>'Web', 'action' =>'index']) ?>"
+                   class="btn btn-secondary" id="btnHideModalImprimir">LISTO</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Plugins JS File -->
 <?= $this->Html->script([
-
-    '../assets/js/bootstrap.bundle.min.js',
+    'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js',
+    //'../assets/js/bootstrap.bundle.min.js',
     '../assets/js/jquery.hoverIntent.min.js',
     '../assets/js/jquery.waypoints.min.js',
     '../assets/js/superfish.min.js',
@@ -289,5 +307,6 @@ $cakeDescription = 'ecommerce';
     '../assets/js/demos/demo-7.js',
     'app/app.js'
 ]) ?>
+
 </body>
 </html>

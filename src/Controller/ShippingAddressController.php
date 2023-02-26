@@ -49,13 +49,24 @@ class ShippingAddressController extends AppController
         if ($this->request->is('post')) {
             $shippingAddres = $this->ShippingAddress->patchEntity($shippingAddres, $this->request->getData());
             if ($this->ShippingAddress->save($shippingAddres)) {
-                $this->Flash->success(__('The shipping addres has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $data = [
+                    'error' => 'success',
+                    'message' => 'Dirección de envío registrado correctamente'
+                ];
+            }else{
+                $data = [
+                    'error' => 'ERROR',
+                    'message' => 'No se pudo registrar la dirección de envío, inténtelo nuevamente'
+                ];
             }
-            $this->Flash->error(__('The shipping addres could not be saved. Please, try again.'));
+
+            $this->set(compact('data'));
+            $this->viewBuilder()->setOption('serialize', 'data');
+
         }
-        $this->set(compact('shippingAddres'));
+
+        $countries = $this->ShippingAddress->Countries->find('list');
+        $this->set(compact('shippingAddres', 'countries'));
     }
 
     /**
@@ -80,6 +91,17 @@ class ShippingAddressController extends AppController
             $this->Flash->error(__('The shipping addres could not be saved. Please, try again.'));
         }
         $this->set(compact('shippingAddres'));
+    }
+
+    public function getData($user_id = null){
+        $shipping = $this->ShippingAddress->find('all')
+            //->contain('Countries')
+            ->where(['user_id' => $user_id])
+            ->all();
+
+        //debug($shipping); exit();
+
+        $this->set(compact('shipping'));
     }
 
     /**

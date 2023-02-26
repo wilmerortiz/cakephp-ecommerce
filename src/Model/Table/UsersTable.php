@@ -66,16 +66,16 @@ class UsersTable extends Table
             'targetForeignKey' => 'role_id'
         ]);
 
-
         $this->hasMany('BillingAddress', [
             'foreignKey' => 'user_id',
         ]);
         $this->hasMany('ShippingAddress', [
             'foreignKey' => 'user_id',
         ]);
-        /*$this->hasMany('UserRoles', [
-            'foreignKey' => 'user_id',
-        ]);*/
+
+        $this->hasMany('Checkout', [
+            'foreignKey' => 'cliente_id',
+        ]);
     }
 
     /**

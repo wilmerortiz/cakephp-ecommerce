@@ -39,10 +39,32 @@ class WebController extends AppController{
             ->limit(3);
 
         $products = $typesTable->find('all')
-            ->contain('Products')
+            ->contain([
+                'Products'=>[
+                    'queryBuilder' => function ($q) {
+                        $q->where(['Products.featured' => true]);
+                        $q->limit(12);
+                        return $q;
+                    }
+                ]
+            ])
             ->where(['status'=>1])
-            ->order(['id'=>'asc']);
+            ->order(['id'=>'asc'])->all();
 
-        $this->set(compact('types', 'varios', 'categories', 'products'));
+        $productsArrivals = $typesTable->find('all')
+            ->contain([
+                'Products'=>[
+                    'queryBuilder' => function ($q) {
+                       $q->where(['Products.new_arrivals' => true]);
+                       $q->limit(12);
+                        return $q;
+                    }
+                ]
+            ])
+            ->where(['status'=>1])
+            ->order(['id'=>'asc'])
+            ->all();
+
+        $this->set(compact('types', 'varios', 'categories', 'products', 'productsArrivals'));
     }
 }

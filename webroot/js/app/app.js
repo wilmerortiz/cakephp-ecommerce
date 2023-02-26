@@ -114,6 +114,88 @@ const removeItem = (id) => {
     addToCart();
 }
 
+const addAndUpdateData = (id, modalFormId, formId, controllerAndAction, print=false) => {
+    $.ajax({
+        url : `${baseUrl}${controllerAndAction}/${id}`,
+        type: 'POST',
+        data: $(`#${formId}`).serialize(), // $('#'+formId).serialize()
+        dataType: 'json'
+    }).done((resp) => {
+        Swal.fire({
+            icon: 'success',
+            title: 'DONE',
+            text: resp.message
+        })
+        $('#' + modalFormId).modal('hide');
+        $('#' + modalFormId).on('hidden.bs.modal', function (evt) {
+            if(controllerAndAction === 'ShippingAddress/add'){
+                getAddress($('#user_id').val(), 'ShippingAddress/getData', 'shipping-address')
+            }else if(controllerAndAction === 'BillingAddress/add'){
+                getAddress($('#user_id').val(), 'BillingAddress/getData', 'billing-address')
+            }
+        })
+        // Limpiamos el localStorage
+        if(controllerAndAction==='Checkout/add'){
+            localStorage.removeItem('cartItems');
+            localStorage.removeItem('subTotal');
+            localStorage.removeItem('shipping');
+            localStorage.removeItem('summaryTotal');
+        }
+
+        print && imprimir(resp)
+
+    }).fail((resp) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: resp.message
+        })
+    })
+}
+
+const getAddress = (user_id, controllerAndAction, showContent) => {
+    $.ajax({
+        url: baseUrl + controllerAndAction + '/' + user_id, // http://localhost/ecommerce/ShippingAddress/getData/4
+        type: 'GET',
+        dataType: 'html'
+    }).done((resp) => {
+        $('#' + showContent).html(resp)
+    }).fail((resp) => {
+        console.log(resp)
+    })
+}
+
+const imprimir = (params) => {
+    const ruta = `${baseUrl}${params.controller}/${params.id}`;
+
+    $('#iframeImprimir').attr('src', ruta);
+    $('#modalImprimir').modal('show');
+}
+
 $(document).ready(function(){
     addToCart();
+    /*
+    function disableIE() {
+        if (document.all) {
+            return false;
+        }
+    }
+    function disableNS(e) {
+        if (document.layers || (document.getElementById && !document.all)) {
+            if (e.which==2 || e.which==3) {
+                return false;
+            }
+        }
+    }
+    if (document.layers) {
+        document.captureEvents(Event.MOUSEDOWN);
+        document.onmousedown = disableNS;
+    }
+    else {
+        document.onmouseup = disableNS;
+        document.oncontextmenu = disableIE;
+    }
+    document.oncontextmenu=new Function("return false");
+
+     */
 })

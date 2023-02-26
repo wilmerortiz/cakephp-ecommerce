@@ -49,13 +49,22 @@ class BillingAddressController extends AppController
         if ($this->request->is('post')) {
             $billingAddres = $this->BillingAddress->patchEntity($billingAddres, $this->request->getData());
             if ($this->BillingAddress->save($billingAddres)) {
-                $this->Flash->success(__('The billing addres has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $data = [
+                    'error' => 'success',
+                    'message' => 'Dirección de facturación registrado correctamente'
+                ];
+            }else{
+                $data = [
+                    'error' => 'ERROR',
+                    'message' => 'No se pudo registrar la dirección de facturación, inténtelo nuevamente'
+                ];
             }
-            $this->Flash->error(__('The billing addres could not be saved. Please, try again.'));
+
+            $this->set(compact('data'));
+            $this->viewBuilder()->setOption('serialize', 'data');
         }
-        $this->set(compact('billingAddres'));
+        $countries = $this->BillingAddress->Countries->find('list');
+        $this->set(compact('billingAddres', 'countries'));
     }
 
     /**
@@ -80,6 +89,17 @@ class BillingAddressController extends AppController
             $this->Flash->error(__('The billing addres could not be saved. Please, try again.'));
         }
         $this->set(compact('billingAddres'));
+    }
+
+    public function getData($user_id = null){
+        $billing = $this->BillingAddress->find('all')
+            //->contain('Countries')
+            ->where(['user_id' => $user_id])
+            ->all();
+
+        //debug($shipping); exit();
+
+        $this->set(compact('billing'));
     }
 
     /**

@@ -26,6 +26,10 @@ class ProductsController extends AppController
         $this->set(compact('products'));
     }
 
+    public function listado(){
+
+    }
+
     /**
      * View method
      *
@@ -33,7 +37,7 @@ class ProductsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function details($id = null)
     {
         $product = $this->Products->get($id, [
             'contain' => ['Types'],

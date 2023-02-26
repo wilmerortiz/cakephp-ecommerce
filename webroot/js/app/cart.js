@@ -112,5 +112,9 @@ const calcularTotales = () => {
 
     const summaryTotal = parseFloat(shipping) + parseFloat(valSubtotal);
 
+    localStorage.setItem('subTotal', valSubtotal);
+    localStorage.setItem('shipping', shipping);
+    localStorage.setItem('summaryTotal', JSON.stringify(summaryTotal))
+
     $(`#summary-total`).text(`$${summaryTotal}`);
 }

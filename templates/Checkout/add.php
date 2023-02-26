@@ -1,4 +1,4 @@
-<?php //debug($current_user); ?>
+<?php date_default_timezone_set('America/Lima'); ?>
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         <div class="container">
@@ -25,6 +25,14 @@
                     </form>
                 </div><!-- End .checkout-discount -->
                 <?= $this->Form->create($order, ['id'=>'Formulario', 'novalidate']) ?>
+                    <?= $this->Form->hidden('user_id', ['id' => 'user_id', 'value' => $current_user->id]) ?>
+                    <?= $this->Form->hidden('cliente_id', ['id' => 'cliente_id', 'value' => $current_user->id]) ?>
+                    <?= $this->Form->hidden('fecha', ['id'=>'fecha', 'value' => date('Y-m-d H:i')]) ?><!-- 2023-02-25 09:48 -->
+
+                    <?= $this->Form->hidden('total', ['id' => 'total', 'value' => 0]) ?>
+                    <?= $this->Form->hidden('impuestos', ['id' => 'impuestos', 'value' => 0]) ?>
+                    <?= $this->Form->hidden('sub_total', ['id' => 'sub_total', 'value' => 0]) ?>
+                    <?= $this->Form->hidden('shipping_monto', ['id' => 'shipping_monto', 'value' => 0]) ?>
                     <div class="row">
                         <div class="col-lg-9">
                             <h2 class="checkout-title">Datos Generales</h2><!-- End .checkout-title -->
@@ -81,7 +89,9 @@
                             <h2 class="checkout-title">Dirección de envío</h2><!-- End .checkout-title -->
                             <div class="row">
                                 <div class="col-sm-12" id="shipping-address">
-
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary" onclick="registerAddress('shipping')">
@@ -93,7 +103,9 @@
                             <h2 class="checkout-title">Dirección de facturación</h2><!-- End .checkout-title -->
                             <div class="row">
                                 <div class="col-sm-12" id="billing-address">
-
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary" onclick="registerAddress('billing')">
@@ -102,90 +114,31 @@
                                 </div>
                             </div>
 
-                            <label>Company Name (Optional)</label>
-                            <input type="text" class="form-control">
-
-                            <label>Country *</label>
-                            <input type="text" class="form-control" required>
-
-                            <label>Street address *</label>
-                            <input type="text" class="form-control" placeholder="House number and Street name" required>
-                            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
-
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Town / City *</label>
-                                    <input type="text" class="form-control" required>
-                                </div><!-- End .col-sm-6 -->
+                                <div class="col-sm-12 mt-3">
+                                    <label for="">Descripción (Opcional)</label>
+                                    <?= $this->Form->control('descripcion', [
+                                        'label' => false,
+                                        'class'=>'form-control',
+                                        'id' => 'descripcion'
+                                    ]) ?>
+                                </div>
+                            </div>
 
-                                <div class="col-sm-6">
-                                    <label>State / County *</label>
-                                    <input type="text" class="form-control" required>
-                                </div><!-- End .col-sm-6 -->
-                            </div><!-- End .row -->
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Postcode / ZIP *</label>
-                                    <input type="text" class="form-control" required>
-                                </div><!-- End .col-sm-6 -->
-
-                                <div class="col-sm-6">
-                                    <label>Phone *</label>
-                                    <input type="tel" class="form-control" required>
-                                </div><!-- End .col-sm-6 -->
-                            </div><!-- End .row -->
-
-                            <label>Email address *</label>
-                            <input type="email" class="form-control" required>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-                            </div><!-- End .custom-checkbox -->
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-                                <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-                            </div><!-- End .custom-checkbox -->
-
-                            <label>Order notes (optional)</label>
-                            <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
                             <div class="summary">
                                 <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
 
-                                <table class="table table-summary">
+                                <table class="table table-summary" id="tableSummary">
                                     <thead>
                                     <tr>
                                         <th>Product</th>
                                         <th>Total</th>
                                     </tr>
                                     </thead>
-
                                     <tbody>
-                                    <tr>
-                                        <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                                        <td>$84.00</td>
-                                    </tr>
 
-                                    <tr>
-                                        <td><a href="#">Blue utility pinafore denimdress</a></td>
-                                        <td>$76,00</td>
-                                    </tr>
-                                    <tr class="summary-subtotal">
-                                        <td>Subtotal:</td>
-                                        <td>$160.00</td>
-                                    </tr><!-- End .summary-subtotal -->
-                                    <tr>
-                                        <td>Shipping:</td>
-                                        <td>Free shipping</td>
-                                    </tr>
-                                    <tr class="summary-total">
-                                        <td>Total:</td>
-                                        <td>$160.00</td>
-                                    </tr><!-- End .summary-total -->
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 
@@ -265,14 +218,15 @@
                                     </div><!-- End .card -->
                                 </div><!-- End .accordion -->
 
-                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block"
+                                id="btnSubmit">
                                     <span class="btn-text">Place Order</span>
                                     <span class="btn-hover-text">Proceed to Checkout</span>
                                 </button>
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->
                     </div><!-- End .row -->
-                </form>
+                <?= $this->Form->end(); ?>
             </div><!-- End .container -->
         </div><!-- End .checkout -->
     </div><!-- End .page-content -->
@@ -281,3 +235,29 @@
 <?= $this->Html->script([
     'app/checkout.js'
 ]) ?>
+
+<script>
+    $('#Formulario').submit(function(evt) {
+        const vForm = $(this); // const vForm = $('#Formulario');
+
+        if(vForm[0].checkValidity() === false){
+            evt.preventDefault();
+            evt.stopPropagation();
+        } else {
+            evt.preventDefault();
+            $('#btnSubmit').html(`
+                <span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span>
+                Procesando pedido...
+            `).attr('disabled', 'disabled');
+
+            addAndUpdateData(-1, 'modalFormulario', 'Formulario', 'Checkout/add', true)
+        }
+
+        vForm.addClass('was-validated')
+    })
+    $(document).ready(function(){
+        getAddress(<?= $user->id ?>, 'ShippingAddress/getData', 'shipping-address');
+        getAddress(<?= $user->id ?>, 'BillingAddress/getData', 'billing-address');
+        totalSummary()
+    })
+</script>

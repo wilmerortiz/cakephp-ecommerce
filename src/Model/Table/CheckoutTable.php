@@ -16,5 +16,13 @@ class CheckoutTable extends Table {
         $this->setDisplayField('fecha');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Users', [
+            'foreignKey' => 'cliente_id',
+        ]);
+
+        $this->belongsTo('ShippingAddress', [
+            'foreignKey' => 'shipping_address_id',
+        ]);
+
     }
 }

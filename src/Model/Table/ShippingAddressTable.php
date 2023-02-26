@@ -54,6 +54,10 @@ class ShippingAddressTable extends Table
         $this->belongsTo('Countries', [
             'foreignKey' => 'country_id',
         ]);
+
+        $this->hasMany('Checkout', [
+            'foreignKey' => 'shipping_address_id',
+        ]);
     }
 
     /**

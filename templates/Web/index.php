@@ -175,30 +175,37 @@
             <h2 class="title">NEW ARRIVALS</h2><!-- End .title -->
 
             <ul class="nav nav-pills justify-content-center" role="tablist">
+                <?php foreach ($productsArrivals as $ky => $type): ?>
                 <li class="nav-item">
-                    <a class="nav-link active" id="new-women-link" data-toggle="tab" href="#new-women-tab" role="tab" aria-controls="new-women-tab" aria-selected="true">Womens Clothing</a>
+                    <a class="nav-link <?php if($ky===0) echo 'active' ?>"
+                       id="new-tab-link-<?= $type->id ?>" data-toggle="tab"
+                       href="#new-tab-tab-<?= $type->id ?>" role="tab"
+                       aria-controls="new-women-tab"
+                       aria-selected="<?= $ky===0 ? 'true' : 'false' ?>">
+                        <?= $type->name ?> Clothing
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="new-men-link" data-toggle="tab" href="#new-men-tab" role="tab" aria-controls="new-men-tab" aria-selected="false">Mens Clothing</a>
-                </li>
+                <?php endforeach; ?>
             </ul>
         </div><!-- End .heading -->
 
         <div class="tab-content">
-            <div class="tab-pane p-0 fade show active" id="new-women-tab" role="tabpanel" aria-labelledby="new-women-link">
+            <?php foreach ($productsArrivals as $ky => $type): ?>
+            <div class="tab-pane p-0 fade <?php if($ky===0) echo 'show active' ?>" id="new-tab-tab-<?= $type->id ?>" role="tabpanel" aria-labelledby="new-tab-link-<?= $type->id ?>">
                 <div class="products">
                     <div class="row justify-content-center">
+                        <?php foreach ($type->products as $kp => $product): ?>
                         <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                             <div class="product product-7 text-center">
                                 <figure class="product-media">
-                                    <span class="product-label label-circle label-sale">Sale</span>
                                     <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-6-1.jpg',
+                                        <?= $this->Html->image($product->image,
                                             ['alt' =>'Product image', 'class'=>'product-image']);
                                         ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-6-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
+                                        <!--
+                                        <?php //echo $this->Html->image('../assets/images/demos/demo-7/products/product-7-2.jpg',
+                                            //['alt' =>'Product image', 'class'=>'product-image-hover']);
+                                        ?>-->
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -207,51 +214,18 @@
                                     </div><!-- End .product-action-vertical -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        <a href="javascript:"
+                                           class="btn-product btn-cart"
+                                        onclick="addItem(<?= $product->id ?>, '<?= $product->name ?>', <?= $product->price ?>, '<?= $product->image ?>')">
+                                            <span>add to cart</span>
+                                        </a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Tie-detail top</a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><a href="product.html"><?= $product->name ?></a></h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        <span class="new-price">$50.00</span>
-                                        <span class="old-price">$84.00</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-7-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-7-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Dress with a belt</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $120.99
+                                        $<?= $product->price ?>
                                     </div><!-- End .product-price -->
                                     <div class="ratings-container">
                                         <div class="ratings">
@@ -262,310 +236,12 @@
                                 </div><!-- End .product-body -->
                             </div><!-- End .product -->
                         </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-8-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-8-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
+                        <?php endforeach ?>
 
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Linen-blend paper bag trousers</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $60.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #d5ad81;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-9-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-9-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Paper straw shopper</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $80.95
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 6 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-10-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-10-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Trainers</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $56.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <span class="product-label label-circle label-sale">Sale</span>
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-11-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-11-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Hooded top </a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        <span class="new-price">$50.00</span>
-                                        <span class="old-price">$84.00</span>
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-12-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-12-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Vest dress</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $89.99
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-13-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-13-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Long-sleeved blouse</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $84.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 3 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-14-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-14-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Denim jacket</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $80.95
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                    <div class="product-nav product-nav-dots">
-                                        <a href="#" class="active" style="background: #7ba1c9;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #feb143;"><span class="sr-only">Color name</span></a>
-                                        <a href="#" style="background: #f0c7b7;"><span class="sr-only">Color name</span></a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                            <div class="product product-7 text-center">
-                                <figure class="product-media">
-                                    <a href="product.html">
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-15-1.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image']);
-                                        ?>
-                                        <?= $this->Html->image('../assets/images/demos/demo-7/products/product-15-2.jpg',
-                                            ['alt' =>'Product image', 'class'=>'product-image-hover']);
-                                        ?>
-                                    </a>
-
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    </div><!-- End .product-action-vertical -->
-
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
-
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">Sunglasses</a></h3><!-- End .product-title -->
-                                    <div class="product-price">
-                                        $56.00
-                                    </div><!-- End .product-price -->
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 2 Reviews )</span>
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .product-body -->
-                            </div><!-- End .product -->
-                        </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
                     </div><!-- End .row -->
                 </div><!-- End .products -->
             </div><!-- .End .tab-pane -->
+            <?php endforeach; ?>
             <div class="tab-pane p-0 fade" id="new-men-tab" role="tabpanel" aria-labelledby="new-men-link">
                 <div class="products">
                     <div class="row justify-content-center">
@@ -798,138 +474,17 @@
         </div><!-- End .tab-content -->
 
         <div class="more-container text-center mt-2">
-            <a href="#" class="btn btn-outline-dark-3 btn-more"><span>Load more</span><i class="icon-long-arrow-right"></i></a>
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action'=>'listado']) ?>"
+               class="btn btn-outline-dark-3 btn-more">
+                <span>Load more</span><i class="icon-long-arrow-right"></i>
+            </a>
         </div><!-- End .more-container -->
 
-        <hr class="mt-0 mb-6">
-
-        <div class="blog-posts mb-4">
-            <h2 class="title text-center mb-3">From Our Blog</h2><!-- End .title text-center -->
-
-            <div class="owl-carousel owl-simple mb-2" data-toggle="owl"
-                 data-owl-options='{
-                            "nav": false,
-                            "dots": true,
-                            "items": 3,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":1
-                                },
-                                "520": {
-                                    "items":2
-                                },
-                                "768": {
-                                    "items":3
-                                },
-                                "992": {
-                                    "items":4
-                                }
-                            }
-                        }'>
-                <article class="entry">
-                    <figure class="entry-media">
-                        <a href="single.html">
-                            <?= $this->Html->image('../assets/images/demos/demo-7/blog/post-1.jpg',
-                                ['alt' =>'image desc']);
-                            ?>
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body text-center">
-                        <div class="entry-meta">
-                            <a href="#">Nov 22, 2018</a>, 1 Comments
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">Sed adipiscing ornare.</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            <a href="single.html" class="read-more">Read More</a>
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-
-                <article class="entry">
-                    <figure class="entry-media">
-                        <a href="single.html">
-                            <?= $this->Html->image('../assets/images/demos/demo-7/blog/post-2.jpg',
-                                ['alt' =>'image desc']);
-                            ?>
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body text-center">
-                        <div class="entry-meta">
-                            <a href="#">Dec 12, 2018</a>, 0 Comments
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">Fusce lacinia arcuet nulla.</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            <a href="single.html" class="read-more">Read More</a>
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-
-                <article class="entry">
-                    <figure class="entry-media">
-                        <a href="single.html">
-                            <?= $this->Html->image('../assets/images/demos/demo-7/blog/post-3.jpg',
-                                ['alt' =>'image desc']);
-                            ?>
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body text-center">
-                        <div class="entry-meta">
-                            <a href="#">Dec 19, 2018</a>, 2 Comments
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">Quisque volutpat mattis eros.</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            <a href="single.html" class="read-more">Read More</a>
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-
-                <article class="entry">
-                    <figure class="entry-media">
-                        <a href="single.html">
-                            <?= $this->Html->image('../assets/images/demos/demo-7/blog/post-4.jpg',
-                                ['alt' =>'image desc']);
-                            ?>
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body text-center">
-                        <div class="entry-meta">
-                            <a href="#">Dec 25, 2018</a>, 3 Comments
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">Mauris suscipit in massa.</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            <a href="single.html" class="read-more">Read More</a>
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-            </div><!-- End .owl-carousel -->
-        </div><!-- End .blog-posts -->
     </div><!-- End .container-fluid -->
-
+    <!--
     <div class="bg-light-2 pt-7 pb-6 testimonials">
         <div class="container">
-            <h2 class="title text-center mb-2">Our Customers Say</h2><!-- End .title text-center -->
+            <h2 class="title text-center mb-2">Our Customers Say</h2>
             <div class="owl-carousel owl-simple owl-testimonials" data-toggle="owl"
                  data-owl-options='{
                             "nav": false,
@@ -943,38 +498,38 @@
                             }
                         }'>
                 <blockquote class="testimonial testimonial-icon text-center">
-                    <p class="lead">“Really great store”</p><!-- End .lead -->
+                    <p class="lead">“Really great store”</p>
                     <p>“ Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra<br>a, ultricies in, diam. Sed arcu. ”</p>
 
                     <cite>
                         Charly Smith,
                         <span>Customer</span>
                     </cite>
-                </blockquote><!-- End .testimonial -->
+                </blockquote>
 
                 <blockquote class="testimonial testimonial-icon text-center">
-                    <p class="lead">“Friendly Support”</p><!-- End .lead -->
+                    <p class="lead">“Friendly Support”</p>
                     <p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem error eum quis similique doloribus natus qui ut ipsum.”</p>
 
                     <cite>
                         Damon Stone
                         <span>Customer</span>
                     </cite>
-                </blockquote><!-- End .testimonial -->
+                </blockquote>
 
                 <blockquote class="testimonial testimonial-icon text-center">
-                    <p class="lead">“Free Shipping”</p><!-- End .lead -->
+                    <p class="lead">“Free Shipping”</p>
                     <p>“ Molestias animi illo natus ut quod neque ad accusamus praesentium fuga! Dolores odio alias sapiente odit delectus quasi, explicabo a, modi voluptatibus. Perferendis perspiciatis, voluptate, distinctio earum veritatis animi tempora eget blandit nunc tortor mollis ”</p>
 
                     <cite>
                         John Smith
                         <span>Customer</span>
                     </cite>
-                </blockquote><!-- End .testimonial -->
-            </div><!-- End .testimonials-slider owl-carousel -->
-        </div><!-- End .container -->
-    </div><!-- End .bg-light pt-5 pb-5 -->
-
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    -->
     <div class="brands-border owl-carousel owl-simple" data-toggle="owl"
          data-owl-options='{
                     "nav": false,
